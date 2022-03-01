@@ -1,0 +1,157 @@
+
+
+body{
+  background-color: #222831;
+  margin :0;
+  text-align: center;
+}
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 562.5em;
+  margin: 0 auto;
+}
+.hr_index{
+  color: white;
+  margin-top: 0;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+.copy{
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  padding-left: 83%;
+  padding-top: 20px;
+}
+.hr_index2{
+  color: white;
+}
+.senku{
+  padding-top: 50px;
+}
+.web{
+  padding-top: 50px;
+}
+.interactive_story{
+  padding-top: 75px;
+}
+.synt{
+  padding-top: 10px;
+  font-size: 1.2rem;
+}
+.sideImages{
+  height: 125px;
+  width: 125px;
+}
+.images{
+  height: 155px;
+  width: 155px;
+}
+
+.top_container{
+  position: relative;
+  margin-top: 0;
+  padding-top: 100px;
+}
+.font2{
+  font-family: 'Montserrat', sans-serif;
+}
+.font3{
+  color: white;
+  font-family: 'Poppins'cursive;
+}
+.chopper{
+  width: 20%;
+  height: 20%;
+}
+.chopi{
+  padding-top: 50px;
+}
+.font {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  font-size: 2.0rem;
+
+}
+.font_abtme{
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
+  font-size: 1.5em;
+}
+.mid_container{
+  text-align: center;
+}
+
+.FSD{
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  font-size: 4.5rem;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: white;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.zoom {
+  transition: transform .2s;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  transform: scale(1.1);
+}
+@keyframes yourAnimation {
+    0.0%{
+    }
+    2.8%{
+        transform: translate(0px,-150px);
+    }
+}
+
+.FSD{
+  animation: yourAnimation 2s ease 0s  normal none;
+}
+.vanshul{
+  animation: yourAnimation 3s ease 0s  normal none;
+}
+.socials{
+  animation: yourAnimation 1.5s ease 0s  normal none;
+}
+.navbar{
+  animation: yourAnimation 2s ease 0s  normal none;
+}
+.projects{
+  animation: yourAnimation 1s ease 0s  normal none;
+}
+.chopi{
+  animation: yourAnimation 2s ease 0s  normal none;
+}
+.font_abtme{
+  animation: yourAnimation 2.5s ease 0s  normal none;
+}
+.hr_index{
+  animation: yourAnimation 2s ease 0s  normal none;
+}
