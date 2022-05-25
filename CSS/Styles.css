@@ -94,7 +94,7 @@ h1 {
 .FSD{
   font-family: 'Montserrat', sans-serif;
   color: white;
-  font-size: 4.5rem;
+  font-size: 4rem;
 }
 
 .hover-underline-animation {
@@ -127,7 +127,7 @@ h1 {
 }
 
 .zoom:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 @keyframes yourAnimation {
     0.0%{
