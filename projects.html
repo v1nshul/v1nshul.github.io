@@ -23,74 +23,145 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand hover-underline-animation font2" href="index.html">Home</a>
-      <div class="navbar-nav">
-        <a class="nav-link hover-underline-animation font2" href="projects.html">Projects</a>
-        <a class="nav-link hover-underline-animation font2" href="aboutMe.html">About me</a>
+
+      <!-- Toggler for small screens -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav">
+          <a class="nav-link hover-underline-animation font2" href="https://drive.google.com/file/d/1C2loedeEkZsU6zkdZMCnVhAE4kNclsxL/view?usp=sharing">Resume</a>
+          <a class="nav-link hover-underline-animation font2" href="projects.html">Projects</a>
+          <a class="nav-link hover-underline-animation font2" href="aboutMe.html">About me</a>
+        </div>
       </div>
     </div>
   </nav>
+
+  <!-- Bootstrap JS (including the bundle with Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  
   <hr class="hr_index">
   <div class="font_abtme">
 
       <div class="projects">
         Below is the list of some of my personal and group projects:
-
       </div>
-    <div class="senku ">
 
-        - Jawara
-        <div class="synt">
+      <div class="container mt-3">
+        <div class="row g-3"> <!-- Single row with gutters -->
 
-          • Web-App for a major car company in Japan(case study), makes their way of communication and work more efficient. 
-          • Applied Agile methodologies throughout the period, producing relevant artefacts like product backlog, 
-          weekly scrum reports and results
-          • Used flask to create the website and practised it in node as well. It also used HTML, CSS, and java-script.
-          • Worked together as a group of 5.  
-          • Used tools such as Azure Dev-Ops for smooth functioning of the project. 
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/sym.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">Real-Time Symbol Manipulation</h5>
+                <p class="card-text" style="font-size: 1.3rem;">Integrating MediaPipe with TouchDesigner to improve digital interaction. Part of
+                  my study on increasing participation in virtual worlds.</p>
+                <a href="mailto:vansy.kb@yahoo.com" class="btn btn-primary">Request Project Proposal</a>
+              </div>
+            </div>
+          </div>
 
-        </div>
-    </div>
-    
-    <div class="senku ">
-
-        - Team Connect
-        <div class="synt">
-
-          • Team Connect is a web app that is in progress and was made by Team IRN-BRU  which was a group of 5 people at hack the midlands 7.0, 
-          • It was created for events like this where organisers can set up teams before hand for the event. 
-          • I used node to create the website with HTML, CSS, and java-script.
-          • We used Agile methods for better understanding and workflow of the project. Will be working on this project in the future
-        </div>
-    </div>
-    
-    <div class="senku ">
-        <a href="https://github.com/v1nshul/Monster-souls_-all-">- Monster Souls</a> 
-
-        <div class="synt">
-          • Text based Adventure RPG, made in C++,fight monsters and collect souls to escape the great forest.
-          • Used Concepts of OOP to make the game work efficiently. 
-          • Made in co-ordination with 5 other team mates. 
-          • Planned the project following Agile Methods having weekly scrum meetings. 
-          • Coding and testing using C++ programming.
-        </div>
-    </div>
-    
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/snp.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">S&P500 Stock Predictor</h5>
+                <p class="card-text" style="font-size: 1.3rem;">Fine-tuned models using Hyperparameter Modelling and Grid Search to algorithms like
+                  Ridge and Lasso Regression achieving 74% accuracy in prediction</p>
+                <a href="mailto:vansy.kb@yahoo.com" class="btn btn-primary">Request Access</a>
+              </div>
+            </div>
+          </div>
       
-      <div class="senku">
-        <a href="https://github.com/v1nshul/ChatBot.git">- Senku (Anime Chat Bot)</a>
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/xB.png" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">Automated X bot with OpenAI & Gemini API </h5>
+                <p class="card-text" style="font-size: 1.4rem;">X bot made using OpenAI API and Gemini API, posts written through GenAI, implemented error handling for Rate limiting. </p>
+                <a href="mailto:vansy.kb@yahoo.com" class="btn btn-primary">Request Access</a>
+              </div>
+            </div>
+          </div>
 
-         <div class="synt">
-           • A chat bot that can give you updates on anime shows you want to know.
-           • As of now it have 2 prototypes one uses AniList API and can give you data about any Anime.
-           • The second one uses NLP (natural language processing toolkit ). It tries to understand the normal speech through tokenizing.
-           • Used Python and JSON
-         </div>
-         
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/senku.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">Anime NLP Chatbot</h5>
+                <p class="card-text" style="font-size: 1.1rem;">A chatbot that provides updates on anime shows, with two prototypes: one using the AniList API for anime data, and the other leveraging NLP for understanding natural speech through tokenizing, built with Python and JSON.</p>
+                <a href="https://github.com/v1nshul/ChatBot_senku.git" class="btn btn-primary">Github</a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/bigD.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">MATLAB Atmospheric Data Parallel Computing</h5>
+                <p class="card-text">NetCDF Processing of climate model data from ECMWF, automated testing. 40% faster runtime compared to sequential processing initially.</p>
+                <a href="https://github.com/v1nshul/big-data-climate-analysis.git" class="btn btn-primary">Github</a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/game.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">C++ Text Based RPG</h5>
+                <p class="card-text">Text-based Adventure RPG, made in C++, fight monsters, and collect souls to escape the great forest.</p>
+                <a href="https://github.com/v1nshul/Monster-souls_-all-.git" class="btn btn-primary">Github</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/wpn.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">Facial Detection in Autonomous Weapons</h5>
+                <p class="card-text"> A comparitive and ethical study on facial detection algorithms used in autonomous weapons. Fine tuning models to achieve high accuracy. </p>
+                <a href="mailto:vansy.kb@yahoo.com" class="btn btn-primary">Request Project Report</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/book.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">TCP Book Sales App</h5>
+                <p class="card-text">Interactive book recommendation app with IP socket connection, Pandas data manipulation,
+                  Input and Error handling.</p>
+                <a href="https://github.com/v1nshul/tcp-book-shop.git" class="btn btn-primary">Github</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img src="images/jawara.jpg" class="card-img-top" alt="">
+              <div class="card-body text-dark">
+                <h5 class="card-title">Flask Web APP - Jawara</h5>
+                <p class="card-text">Web-App for a major car company in Japan(case study), makes their way of communication and work more efficient.</p>
+                <a href="https://drive.google.com/file/d/1uFU8gpufYVUCqSIXRyXHUSvcURj-oISF/view?usp=sharing" class="btn btn-primary">Project Report</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+            
 
-      </div>
 
-
+    </div>
 
       
         <div class="chopi">

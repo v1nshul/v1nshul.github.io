@@ -6,6 +6,23 @@
 	z-index: -2;
 }
 
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 100%; /* Ensure cards take the full available width */
+  background-color: #FEF9F2 !important ;
+
+}
+
+.card:hover {
+  transform: scale(1.05); /* Zoom in the card by 5% */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add a subtle shadow to emphasize the zoom */
+}
+
+.container {
+  width: 100%;
+  
+}
+
 body{
   background-color: #222831;
   margin :0;
