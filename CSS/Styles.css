@@ -7,8 +7,7 @@
 }
 
 .card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  max-width: 100%; /* Ensure cards take the full available width */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Ensure cards take the full available width */
   background-color: #FEF9F2 !important ;
 
 }
@@ -102,7 +101,7 @@ h1 {
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 2%;
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 .mid_container{
   text-align: center;
