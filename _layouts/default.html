@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
   </head>
   <body>
-    <main class="container">
+    <a class="skip-link" href="#content">Skip to content</a>
+    <main class="container" id="content">
       {% include navigation.html %}
       {{ content }}
       {% include footer.html %}

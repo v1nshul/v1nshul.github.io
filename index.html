@@ -2,16 +2,21 @@
 layout: default
 ---
 <section class="intro" id="home">
-  <h1>Vanshul Kumar</h1>
-  <p>insert buzzword filled one liner about being a software engineer here</p>
+  <p class="eyebrow">software engineer <span aria-hidden="true">/</span> occasional writer</p>
+  <h1>Vanshul Kumar<span class="accent" aria-hidden="true">.</span></h1>
+  <p class="lede">I build reliable software, automate the boring parts, and write about the things I notice along the way.</p>
+  <p class="current-note"><span class="status-dot" aria-hidden="true"></span>Currently building software at GE Vernova</p>
 </section>
 
 <section id="blog" class="section">
-  <h2>Some blogs</h2>
+  <div class="section-heading">
+    <p class="section-label">01 / writing</p>
+    <h2>Notes from the margins</h2>
+  </div>
   <div class="post-list">
     {% for post in site.posts %}
       <a href="{{ post.url | relative_url }}">
-        <span>{{ post.title }}</span>
+        <span class="post-title">{{ post.title }}</span>
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
       </a>
     {% endfor %}
@@ -19,7 +24,10 @@ layout: default
 </section>
 
 <section id="timeline" class="section">
-  <h2>Experience</h2>
+  <div class="section-heading">
+    <p class="section-label">02 / experience</p>
+    <h2>Where I have worked</h2>
+  </div>
   <ol class="timeline">
     <li>
       <div class="date">Sep 2025 - Now</div>
@@ -41,13 +49,17 @@ layout: default
 </section>
 
 <section id="projects" class="section">
-  <h2>some of my projects that i think are cool but can be cooler</h2>
+  <div class="section-heading">
+    <p class="section-label">03 / selected work</p>
+    <h2>Things I have built</h2>
+  </div>
   <div class="project-grid">
     <article class="project-card">
-      <div class="project-heading">
-        <h3>GestureIQ</h3>
-        <a href="https://github.com/v1nshul/GestureIQ" target="_blank" rel="noreferrer">view</a>
+      <div class="project-meta">
+        <span class="project-number" aria-hidden="true">01</span>
+        <a href="https://github.com/v1nshul/GestureIQ" target="_blank" rel="noreferrer">view project <span aria-hidden="true">&nearr;</span></a>
       </div>
+      <h3>GestureIQ</h3>
       <p>Real-time gesture-controlled interface for digital classroom engagement, integrated with OBS, Teams, and Zoom.</p>
       <div class="tech-list">
         <span>MediaPipe</span>
@@ -57,10 +69,11 @@ layout: default
     </article>
 
     <article class="project-card">
-      <div class="project-heading">
-        <h3>SkyEfficiency</h3>
-        <a href="https://github.com/v1nshul/cirium-hack-codeBase.git" target="_blank" rel="noreferrer">view</a>
+      <div class="project-meta">
+        <span class="project-number" aria-hidden="true">02</span>
+        <a href="https://github.com/v1nshul/cirium-hack-codeBase.git" target="_blank" rel="noreferrer">view <span aria-hidden="true">&nearr;</span></a>
       </div>
+      <h3>SkyEfficiency</h3>
       <p>Hackathon winner analyzing airline operations, optimizing ground time by up to 12% for low-cost carriers.</p>
       <div class="tech-list">
         <span>R Studio</span>
@@ -70,10 +83,11 @@ layout: default
     </article>
 
     <article class="project-card">
-      <div class="project-heading">
-        <h3>SenkuAI</h3>
-        <a href="https://github.com/v1nshul/ChatBot_senku" target="_blank" rel="noreferrer">view</a>
+      <div class="project-meta">
+        <span class="project-number" aria-hidden="true">03</span>
+        <a href="https://github.com/v1nshul/ChatBot_senku" target="_blank" rel="noreferrer">view <span aria-hidden="true">&nearr;</span></a>
       </div>
+      <h3>SenkuAI</h3>
       <p>Anime chatbot with NLP pipeline using AniList GraphQL API and TF-IDF response generation.</p>
       <div class="tech-list">
         <span>NLTK</span>
