@@ -1,28 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The final year university experience | Vanshul Kumar</title>
-    <link rel="stylesheet" href="../styles.css" />
-  </head>
-  <body>
-    <main class="container">
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="../index.html">home</a>
-        <a href="../index.html#timeline">timeline</a>
-        <a href="../index.html#projects">projects</a>
-        <a href="../index.html#blog">blog</a>
-        <a href="../assets/vanshul_kumar_resume_2026.pdf" target="_blank" rel="noreferrer">resume</a>
-      </nav>
-      <article class="post">
-        <time>2025-09-03</time>
-        <h1>The final year university experience</h1>
-        <p class="summary">Reflection on how my final year went.</p>
-        <p>In my opinion, Final year is the year where one learns the most. I think its because you get that feeling of  looking back and reflecting on things and how you are reaching the end of an academic phase. You look back and try not to make the same mistakes you did, your thinking has changed severely (hopefully in a good way).  A nervous excitement haunts you, yes, you might have it all planned out, but then there is also uncertanity . That’s what makes you either nervous or excited. </p>
+---
+layout: post
+title: "The final year university experience"
+summary: "Reflection on how my final year went."
+---
+<p>In my opinion, Final year is the year where one learns the most. I think its because you get that feeling of  looking back and reflecting on things and how you are reaching the end of an academic phase. You look back and try not to make the same mistakes you did, your thinking has changed severely (hopefully in a good way).  A nervous excitement haunts you, yes, you might have it all planned out, but then there is also uncertanity . That’s what makes you either nervous or excited. </p>
         <p>My final year was the best university year for me personally. I knew exactly what to give my time and energy to. I was cooking more, dealing with the job market of course- but I didn't let that take away the joy I had during uni. I met new people, made new friends, partied hard and tried my best. Sometimes there are things that you can't do anything about and then you stop worrying about it, you start to realize these sort of things more often I guess, I did. </p>
         <p>in terms of learning, you have all the freedom with your final year project. I was reading what I liked and working on project that I wanted to. I was reading research papers day n night that I actually had fun doing, my virtual library was never this huge before. I was reading too much virtually that I got out of touch reading books. So im starting to do that now though. Books are never boring, other than the ones that bore me of course. </p>
         <p>Alongside studying, I learnt new language, two instruments, salsa and improved my cooking skills. There is learning every day if you look in the right direction. Unconcsiously I might have learnt something new and I haven't realized it.  So I would like to end by saying that my final year university experience was something that I will cherish for long. It is said that if you end things in a good way even though they have been going rough overall it is remembered to be a good thing.  Im thankful for everyone during the last year for making it memorable. </p>
-    </main>
-  </body>
-</html>

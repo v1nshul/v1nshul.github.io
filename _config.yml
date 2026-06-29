@@ -1,0 +1,13 @@
+title: Vanshul Kumar
+description: Software engineer focused on cloud delivery, automation, data pipelines, and reliable software systems.
+url: "https://v1nshul.github.io"
+baseurl: ""
+
+permalink: /blog/:title.html
+timezone: Europe/London
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
