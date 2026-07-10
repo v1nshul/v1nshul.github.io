@@ -1,5 +1,3 @@
-# Vanshul Kumar Portfolio
-
 A minimal Jekyll portfolio and blog hosted with GitHub Pages.
 
 ## How It Works
