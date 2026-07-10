@@ -1,20 +1,16 @@
 :root {
-  color-scheme: light dark;
-  --bg: #ffffff;
-  --text: #171717;
-  --muted: #525252;
-  --faint: #737373;
-  --line: #e5e5e5;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0a0a0a;
-    --text: #ededed;
-    --muted: #d4d4d4;
-    --faint: #a3a3a3;
-    --line: #262626;
-  }
+  color-scheme: light;
+  --bg: #d8cdb8;
+  --paper: #fff8df;
+  --paper-soft: #f4e8bf;
+  --ink: #20170f;
+  --muted: #5f5345;
+  --faint: #887763;
+  --line: #7a5834;
+  --line-soft: #c9a66f;
+  --accent: #9d1f16;
+  --link: #0645ad;
+  --shadow: rgba(64, 42, 20, 0.22);
 }
 
 * {
@@ -26,70 +22,131 @@ html {
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(122, 88, 52, 0.24) 1px, transparent 0) 0 0 / 18px 18px,
+    linear-gradient(135deg, #c7b89c, var(--bg));
+  color: var(--ink);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 15px;
   line-height: 1.65;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--faint);
+  color: var(--accent);
+  background: #fff0a8;
+}
+
+::selection {
+  background: #ffe66d;
+  color: var(--ink);
 }
 
 .container {
-  width: min(640px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 32px 0;
+  position: relative;
+  width: min(720px, calc(100% - 32px));
+  margin: 24px auto;
+  padding: 22px 24px 28px;
+  background: var(--paper);
+  border: 3px double var(--line);
+  box-shadow: 10px 10px 0 var(--shadow);
+}
+
+.container::before {
+  content: "~ v1nshul.github.io / personal homepage ~";
+  display: block;
+  margin: -10px -12px 22px;
+  padding: 5px 10px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 56px;
-  color: var(--muted);
+  gap: 8px 12px;
+  margin-bottom: 34px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--line);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.82rem;
 }
 
 .nav a {
-  border-bottom: 1px solid transparent;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav a::before {
+  content: "[";
+  color: var(--accent);
+}
+
+.nav a::after {
+  content: "]";
+  color: var(--accent);
 }
 
 .nav a:hover {
-  border-bottom-color: currentColor;
+  color: var(--accent);
 }
 
 .intro {
-  margin-bottom: 38px;
+  margin-bottom: 34px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
 }
 
 h1 {
-  margin: 0 0 18px;
-  font-size: 2rem;
-  line-height: 1.2;
-  letter-spacing: 0;
+  margin: 0 0 12px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.85rem, 5vw, 2.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.intro h1::after {
+  content: "_";
+  margin-left: 4px;
+  color: var(--accent);
+  animation: blink 1.2s steps(2, start) infinite;
 }
 
 h2 {
+  display: inline-block;
   margin: 0 0 16px;
-  font-size: 1.25rem;
-  line-height: 1.3;
-  font-weight: 650;
-  letter-spacing: 0;
+  padding: 2px 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 h3 {
   margin: 0 0 3px;
-  font-size: 1rem;
-  line-height: 1.4;
-  font-weight: 600;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.35;
 }
 
 p {
@@ -102,27 +159,26 @@ p {
 }
 
 .timeline {
-  margin: 0 0 0 8px;
-  padding: 0 0 0 16px;
-  border-left: 1px solid var(--line);
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
 .timeline li {
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.34);
+  border: 1px solid var(--line-soft);
 }
 
 .timeline li::before {
-  content: "";
+  content: ">";
   position: absolute;
-  top: 9px;
-  left: -21px;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--bg);
-  border: 1px solid var(--line);
+  top: 12px;
+  left: -16px;
+  color: var(--accent);
+  font-family: "Lucida Console", Monaco, monospace;
 }
 
 .timeline li:last-child {
@@ -132,11 +188,12 @@ p {
 .date {
   margin-bottom: 2px;
   color: var(--faint);
-  font-size: 0.92rem;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.8rem;
 }
 
 .title {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .description {
@@ -147,19 +204,17 @@ p {
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .project-card {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
-  transition: box-shadow 160ms ease, transform 160ms ease;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.28);
+  border: 2px outset var(--paper-soft);
 }
 
 .project-card:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  transform: translateY(-1px);
+  background: #fff4c7;
 }
 
 .project-heading {
@@ -170,8 +225,9 @@ p {
 }
 
 .project-heading a {
-  color: var(--muted);
-  font-size: 0.88rem;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
 }
 
 .project-card p {
@@ -182,43 +238,61 @@ p {
 .tech-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
   margin-top: 12px;
 }
 
 .tech-list span {
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--line), transparent 45%);
+  padding: 3px 7px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line-soft);
   color: var(--muted);
-  font-size: 0.78rem;
-  padding: 4px 8px;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.72rem;
 }
 
 .post-list {
   display: grid;
-  gap: 8px;
+  gap: 7px;
 }
 
 .post-list a {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  color: var(--text);
+  padding: 7px 9px;
+  background: rgba(255, 255, 255, 0.3);
+  border-left: 4px solid var(--line-soft);
+  color: var(--link);
 }
 
-.post-list time {
+.post-list a:hover {
+  border-left-color: var(--accent);
+}
+
+.post-list span::before {
+  content: "file: ";
   color: var(--faint);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.78rem;
+}
+
+.post-list time,
+.post time {
+  color: var(--faint);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.78rem;
   white-space: nowrap;
 }
 
 .post time {
   display: block;
   margin-bottom: 8px;
-  color: var(--faint);
 }
 
 .post h1 {
   margin-bottom: 8px;
+  font-size: clamp(1.65rem, 4vw, 2.1rem);
 }
 
 .post h2 {
@@ -228,30 +302,59 @@ p {
 .summary {
   margin-bottom: 24px;
   color: var(--faint);
+  font-style: italic;
 }
 
 .footer {
   display: flex;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 8px 14px;
   margin-top: 44px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 0.82rem;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .intro h1::after {
+    animation: none;
+  }
 }
 
 @media (max-width: 560px) {
+  body {
+    font-size: 14px;
+  }
+
   .container {
-    width: min(100% - 28px, 640px);
-    padding: 24px 0;
+    width: min(100% - 22px, 720px);
+    margin: 12px auto;
+    padding: 18px 16px 22px;
+    box-shadow: 6px 6px 0 var(--shadow);
+  }
+
+  .container::before {
+    margin: -8px -6px 18px;
   }
 
   .nav {
-    margin-bottom: 42px;
+    margin-bottom: 30px;
   }
 
   .post-list a {
     display: grid;
-    gap: 0;
+    gap: 1px;
   }
 
   .project-grid {
