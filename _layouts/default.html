@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="{{ page.description | default: page.summary | default: site.description | escape }}" />
     <title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem("theme");
+          if (savedTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+          }
+        } catch (error) {
+          document.documentElement.removeAttribute("data-theme");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
   </head>
   <body>
@@ -13,5 +25,40 @@
       {{ content }}
       {% include footer.html %}
     </main>
+    <script>
+      (function () {
+        var toggle = document.getElementById("theme-toggle");
+        if (!toggle) return;
+
+        function isDark() {
+          return document.documentElement.getAttribute("data-theme") === "dark";
+        }
+
+        function syncButton() {
+          var dark = isDark();
+          toggle.setAttribute("aria-pressed", String(dark));
+          toggle.textContent = dark ? "light" : "dark";
+        }
+
+        toggle.addEventListener("click", function () {
+          var nextTheme = isDark() ? "light" : "dark";
+          if (nextTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+          } else {
+            document.documentElement.removeAttribute("data-theme");
+          }
+
+          try {
+            localStorage.setItem("theme", nextTheme);
+          } catch (error) {
+            // Theme still switches for this page load if storage is unavailable.
+          }
+
+          syncButton();
+        });
+
+        syncButton();
+      })();
+    </script>
   </body>
 </html>

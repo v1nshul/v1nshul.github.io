@@ -1,16 +1,35 @@
 :root {
   color-scheme: light;
-  --bg: #d8cdb8;
-  --paper: #fff8df;
-  --paper-soft: #f4e8bf;
-  --ink: #20170f;
-  --muted: #5f5345;
-  --faint: #887763;
-  --line: #7a5834;
-  --line-soft: #c9a66f;
-  --accent: #9d1f16;
-  --link: #0645ad;
-  --shadow: rgba(64, 42, 20, 0.22);
+  --bg: #f2eee3;
+  --paper: #fffdf4;
+  --paper-soft: #f3ecd7;
+  --ink: #1f211c;
+  --muted: #57594f;
+  --faint: #7c7d71;
+  --line: #77684e;
+  --line-soft: #d2c5a8;
+  --accent: #3f6654;
+  --link: #245c8f;
+  --link-hover: #1e6b4e;
+  --highlight: #eee2b8;
+  --shadow: rgba(55, 45, 31, 0.14);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #171914;
+  --paper: #20241d;
+  --paper-soft: #2b3026;
+  --ink: #eee8d8;
+  --muted: #c9c0aa;
+  --faint: #978f7b;
+  --line: #82745b;
+  --line-soft: #4b4435;
+  --accent: #8db59f;
+  --link: #8dbbe6;
+  --link-hover: #a9d4b8;
+  --highlight: #344031;
+  --shadow: rgba(0, 0, 0, 0.38);
 }
 
 * {
@@ -24,9 +43,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(122, 88, 52, 0.24) 1px, transparent 0) 0 0 / 18px 18px,
-    linear-gradient(135deg, #c7b89c, var(--bg));
+  background: var(--bg);
   color: var(--ink);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 15px;
@@ -41,29 +58,33 @@ a {
 }
 
 a:hover {
-  color: var(--accent);
-  background: #fff0a8;
+  color: var(--link-hover);
+  background: var(--highlight);
+}
+
+button {
+  font: inherit;
 }
 
 ::selection {
-  background: #ffe66d;
+  background: var(--highlight);
   color: var(--ink);
 }
 
 .container {
   position: relative;
-  width: min(720px, calc(100% - 32px));
-  margin: 24px auto;
-  padding: 22px 24px 28px;
+  width: min(880px, calc(100% - 36px));
+  margin: 22px auto;
+  padding: 24px 30px 30px;
   background: var(--paper);
   border: 3px double var(--line);
-  box-shadow: 10px 10px 0 var(--shadow);
+  box-shadow: 8px 8px 0 var(--shadow);
 }
 
 .container::before {
   content: "~ v1nshul.github.io / personal homepage ~";
   display: block;
-  margin: -10px -12px 22px;
+  margin: -10px -14px 20px;
   padding: 5px 10px;
   background: var(--paper-soft);
   border: 1px solid var(--line-soft);
@@ -76,10 +97,12 @@ a:hover {
 .nav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px 12px;
-  margin-bottom: 34px;
-  padding-bottom: 14px;
-  border-bottom: 1px dashed var(--line);
+  margin-bottom: 32px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 3px double var(--line);
   font-family: "Lucida Console", Monaco, monospace;
   font-size: 0.82rem;
 }
@@ -89,22 +112,40 @@ a:hover {
   text-decoration: none;
 }
 
-.nav a::before {
+.nav a::before,
+.theme-toggle::before {
   content: "[";
   color: var(--accent);
 }
 
-.nav a::after {
+.nav a::after,
+.theme-toggle::after {
   content: "]";
   color: var(--accent);
 }
 
-.nav a:hover {
-  color: var(--accent);
+.nav a:hover,
+.theme-toggle:hover {
+  color: var(--link-hover);
+}
+
+.theme-toggle {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .intro {
-  margin-bottom: 34px;
+  margin-bottom: 32px;
 }
 
 h1,
@@ -114,11 +155,11 @@ h3 {
 }
 
 h1 {
-  margin: 0 0 12px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.85rem, 5vw, 2.35rem);
+  margin: 0 0 10px;
+  font-family: "Trebuchet MS", Verdana, Geneva, sans-serif;
+  font-size: clamp(1.65rem, 4vw, 2.08rem);
   line-height: 1.12;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .intro h1::after {
@@ -130,12 +171,12 @@ h1 {
 
 h2 {
   display: inline-block;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   padding: 2px 8px;
   background: var(--ink);
   color: var(--paper);
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.35;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -155,45 +196,41 @@ p {
 }
 
 .section {
-  margin-top: 34px;
+  margin-top: 32px;
 }
 
 .timeline {
+  display: grid;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .timeline li {
-  position: relative;
-  margin-bottom: 12px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.34);
-  border: 1px solid var(--line-soft);
+  display: grid;
+  grid-template-columns: 142px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 7px 10px;
+  background: var(--paper-soft);
+  border-left: 3px solid var(--accent);
 }
 
 .timeline li::before {
-  content: ">";
-  position: absolute;
-  top: 12px;
-  left: -16px;
-  color: var(--accent);
-  font-family: "Lucida Console", Monaco, monospace;
-}
-
-.timeline li:last-child {
-  margin-bottom: 0;
+  content: none;
 }
 
 .date {
-  margin-bottom: 2px;
   color: var(--faint);
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
+  line-height: 1.45;
 }
 
 .title {
   font-weight: 700;
+  line-height: 1.45;
 }
 
 .description {
@@ -209,12 +246,13 @@ p {
 
 .project-card {
   padding: 15px;
-  background: rgba(255, 255, 255, 0.28);
-  border: 2px outset var(--paper-soft);
+  background: var(--paper-soft);
+  border: 1px solid var(--line-soft);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
 
 .project-card:hover {
-  background: #fff4c7;
+  border-color: var(--accent);
 }
 
 .project-heading {
@@ -244,7 +282,7 @@ p {
 
 .tech-list span {
   padding: 3px 7px;
-  background: var(--paper-soft);
+  background: var(--paper);
   border: 1px solid var(--line-soft);
   color: var(--muted);
   font-family: "Lucida Console", Monaco, monospace;
@@ -261,7 +299,7 @@ p {
   justify-content: space-between;
   gap: 16px;
   padding: 7px 9px;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--paper-soft);
   border-left: 4px solid var(--line-soft);
   color: var(--link);
 }
@@ -292,7 +330,7 @@ p {
 
 .post h1 {
   margin-bottom: 8px;
-  font-size: clamp(1.65rem, 4vw, 2.1rem);
+  font-size: clamp(1.55rem, 3.5vw, 1.95rem);
 }
 
 .post h2 {
@@ -311,7 +349,7 @@ p {
   gap: 8px 14px;
   margin-top: 44px;
   padding-top: 14px;
-  border-top: 1px dashed var(--line);
+  border-top: 1px solid var(--line);
   font-family: "Lucida Console", Monaco, monospace;
   font-size: 0.82rem;
 }
@@ -332,24 +370,25 @@ p {
   }
 }
 
-@media (max-width: 560px) {
-  body {
-    font-size: 14px;
-  }
-
+@media (max-width: 680px) {
   .container {
-    width: min(100% - 22px, 720px);
+    width: min(100% - 22px, 880px);
     margin: 12px auto;
     padding: 18px 16px 22px;
-    box-shadow: 6px 6px 0 var(--shadow);
+    box-shadow: 5px 5px 0 var(--shadow);
   }
 
   .container::before {
     margin: -8px -6px 18px;
   }
 
-  .nav {
-    margin-bottom: 30px;
+  .theme-toggle {
+    margin-left: 0;
+  }
+
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 1px;
   }
 
   .post-list a {
