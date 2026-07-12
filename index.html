@@ -103,24 +103,34 @@ layout: default
   <h2>Gallery</h2>
   <div class="gallery-grid">
     <figure class="gallery-item">
-      <img src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" alt="A black line drawing titled Latest piece of art" width="665" height="366" loading="lazy" />
+      <button class="gallery-button" type="button" data-gallery-src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" data-gallery-title="latest piece of art" aria-label="View latest piece of art larger">
+        <img src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" alt="A black line drawing titled Latest piece of art" width="665" height="366" loading="lazy" />
+      </button>
       <figcaption>latest piece of art</figcaption>
     </figure>
     <figure class="gallery-item">
-      <img src="{{ '/assets/icu.png' | relative_url }}" alt="Abstract digital artwork titled icu" width="2048" height="1152" loading="lazy" />
+      <button class="gallery-button" type="button" data-gallery-src="{{ '/assets/icu.png' | relative_url }}" data-gallery-title="icu" aria-label="View icu larger">
+        <img src="{{ '/assets/icu.png' | relative_url }}" alt="Abstract digital artwork titled icu" width="2048" height="1152" loading="lazy" />
+      </button>
       <figcaption>icu</figcaption>
     </figure>
     <figure class="gallery-item">
-      <img src="{{ '/assets/noise.png' | relative_url }}" alt="Abstract digital artwork titled noise" width="2048" height="1152" loading="lazy" />
+      <button class="gallery-button" type="button" data-gallery-src="{{ '/assets/noise.png' | relative_url }}" data-gallery-title="noise" aria-label="View noise larger">
+        <img src="{{ '/assets/noise.png' | relative_url }}" alt="Abstract digital artwork titled noise" width="2048" height="1152" loading="lazy" />
+      </button>
       <figcaption>noise</figcaption>
     </figure>
     <figure class="gallery-item">
-      <img src="{{ '/assets/radio.png' | relative_url }}" alt="Abstract digital artwork titled radio" width="2048" height="1152" loading="lazy" />
+      <button class="gallery-button" type="button" data-gallery-src="{{ '/assets/radio.png' | relative_url }}" data-gallery-title="radio" aria-label="View radio larger">
+        <img src="{{ '/assets/radio.png' | relative_url }}" alt="Abstract digital artwork titled radio" width="2048" height="1152" loading="lazy" />
+      </button>
       <figcaption>radio</figcaption>
     </figure>
   </div>
-  <figure class="artwork">
-    <img src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" alt="A black line drawing by Vanshul Kumar" width="665" height="366" />
-    <figcaption><strong>Latest piece of art</strong> / by me</figcaption>
-  </figure>
 </section>
+
+<dialog class="gallery-dialog" id="gallery-dialog" aria-labelledby="gallery-dialog-title">
+  <button class="gallery-dialog-close" type="button" aria-label="Close artwork">close</button>
+  <img id="gallery-dialog-image" alt="" />
+  <p id="gallery-dialog-title"></p>
+</dialog>

@@ -60,5 +60,34 @@
         syncButton();
       })();
     </script>
+    <script>
+      (function () {
+        var dialog = document.getElementById("gallery-dialog");
+        if (!dialog) return;
+
+        var image = document.getElementById("gallery-dialog-image");
+        var title = document.getElementById("gallery-dialog-title");
+        var close = dialog.querySelector(".gallery-dialog-close");
+        var buttons = document.querySelectorAll("[data-gallery-src]");
+
+        buttons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            var artworkTitle = button.getAttribute("data-gallery-title");
+            image.src = button.getAttribute("data-gallery-src");
+            image.alt = "Artwork titled " + artworkTitle;
+            title.textContent = artworkTitle;
+            dialog.showModal();
+          });
+        });
+
+        close.addEventListener("click", function () {
+          dialog.close();
+        });
+
+        dialog.addEventListener("click", function (event) {
+          if (event.target === dialog) dialog.close();
+        });
+      })();
+    </script>
   </body>
 </html>
