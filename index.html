@@ -13,10 +13,6 @@ layout: default
       <a href="https://linkedin.com/in/vanshul-kumar" target="_blank" rel="noreferrer">linkedin</a>
     </p>
   </div>
-  <figure class="artwork">
-    <img src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" alt="A black line drawing by Vanshul Kumar" width="665" height="366" />
-    <figcaption><strong>Latest piece of art</strong> / by me</figcaption>
-  </figure>
 </section>
 
 <section id="blog" class="section">
@@ -95,5 +91,27 @@ layout: default
         <span>GraphQL</span>
       </div>
     </article>
+  </div>
+</section>
+
+<section id="gallery" class="section">
+  <h2>Gallery</h2>
+  <div class="gallery-grid">
+    <figure class="gallery-item">
+      <img src="{{ '/assets/latest-piece-of-art.png' | relative_url }}" alt="A black line drawing titled Latest piece of art" width="665" height="366" loading="lazy" />
+      <figcaption>latest piece of art</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="{{ '/assets/icu.png' | relative_url }}" alt="Abstract digital artwork titled icu" width="2048" height="1152" loading="lazy" />
+      <figcaption>icu</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="{{ '/assets/noise.png' | relative_url }}" alt="Abstract digital artwork titled noise" width="2048" height="1152" loading="lazy" />
+      <figcaption>noise</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="{{ '/assets/radio.png' | relative_url }}" alt="Abstract digital artwork titled radio" width="2048" height="1152" loading="lazy" />
+      <figcaption>radio</figcaption>
+    </figure>
   </div>
 </section>

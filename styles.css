@@ -117,10 +117,6 @@ button {
 }
 
 .intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-  gap: clamp(32px, 7vw, 84px);
-  align-items: center;
   padding: 64px 0 54px;
   border-bottom: 1px solid var(--line);
 }
@@ -184,32 +180,36 @@ p {
   color: var(--line);
 }
 
-.artwork {
-  margin: 0;
-}
-
-.artwork img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--line);
-  background: #fff;
-  filter: grayscale(1) contrast(1.08);
-}
-
-.artwork figcaption {
-  margin-top: 7px;
-  color: var(--faint);
-  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
-  font-size: 0.7rem;
-}
-
-.artwork figcaption strong {
-  color: var(--muted);
-}
 
 .section {
   padding-top: 42px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 18px;
+}
+
+.gallery-item {
+  min-width: 0;
+  margin: 0;
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.gallery-item figcaption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
 }
 
 .post-list {
@@ -374,13 +374,7 @@ p {
   }
 
   .intro {
-    grid-template-columns: 1fr;
-    gap: 28px;
     padding: 44px 0 38px;
-  }
-
-  .artwork {
-    max-width: 420px;
   }
 
   .timeline li {
@@ -388,7 +382,8 @@ p {
     gap: 1px;
   }
 
-  .project-grid {
+  .project-grid,
+  .gallery-grid {
     grid-template-columns: 1fr;
   }
 }
