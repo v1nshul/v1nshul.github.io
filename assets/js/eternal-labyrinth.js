@@ -5,6 +5,8 @@
   var source = document.querySelector("[data-story-source]");
   var scenesContainer = document.querySelector("[data-story-scenes]");
   var visual = document.querySelector("[data-story-visual]");
+  var visualStage = document.querySelector("[data-story-visual-stage]");
+  var scrollObservers = [];
 
   if (!root || !source || !scenesContainer || !visual) return;
 
@@ -68,29 +70,43 @@
     var mode = visualModeForScene(scene);
     var groups = visual.querySelectorAll("[data-visual-group]");
     var active = visual.querySelector('[data-visual-group="' + mode + '"]');
+    var previous = visual.querySelector("[data-visual-group].is-visual-active");
 
     root.setAttribute("data-story-visual-mode", mode);
-    if (!active || !animeApi || reduceMotion.matches) return;
+    if (!active) return;
 
-    animeApi.utils.set(groups, { opacity: 0 });
-    animeApi.animate(visual, {
-      opacity: [0.72, 1],
-      scale: [0.985, 1],
-      duration: 620,
-      ease: "outExpo"
+    groups.forEach(function (group) {
+      group.classList.toggle("is-visual-active", group === active);
     });
+
+    if (!animeApi || reduceMotion.matches) return;
+
+    if (previous && previous !== active) {
+      animeApi.animate(previous, {
+        opacity: [1, 0],
+        scale: [1, 0.82],
+        z: [24, -90],
+        rotateY: [0, 9],
+        duration: 760,
+        ease: "inOutExpo"
+      });
+    }
+
     animeApi.animate(active, {
       opacity: [0, 1],
-      scale: [0.84, 1],
-      rotate: [-2, 0],
-      duration: 760,
+      scale: [0.72, 1],
+      z: [-120, 36],
+      rotateX: [10, 0],
+      rotateY: [-8, 0],
+      duration: 1080,
       ease: "outExpo"
     });
     animeApi.animate(active.querySelectorAll("b, i"), {
       opacity: [0, 1],
-      delay: animeApi.stagger(80),
-      duration: 640,
-      ease: "outQuad"
+      scale: [0.72, 1],
+      delay: animeApi.stagger(58, { from: "center" }),
+      duration: 820,
+      ease: "out(4)"
     });
   }
 
@@ -106,10 +122,11 @@
     renderVisual(nextScene);
 
     if (!animeApi || reduceMotion.matches) return;
-    animeApi.animate(section.querySelector(".story-scene-copy"), {
-      opacity: [0.45, 1],
-      y: [34, 0],
-      duration: 720,
+    animeApi.animate(section.querySelectorAll(".story-progress, .story-text, .story-choices"), {
+      opacity: [0.28, 1],
+      x: [-18, 0],
+      delay: animeApi.stagger(70),
+      duration: 820,
       ease: "outExpo"
     });
   }
@@ -133,6 +150,9 @@
     }
 
     window.requestAnimationFrame(function () {
+      scrollObservers.forEach(function (scrollObserver) {
+        if (scrollObserver && typeof scrollObserver.refresh === "function") scrollObserver.refresh();
+      });
       var target = scenesContainer.querySelector('[data-scene-index="' + destination + '"]');
       if (target) {
         target.scrollIntoView({
@@ -229,6 +249,61 @@
     });
   }
 
+  function startScrollLinkedMotion(sections) {
+    if (!animeApi || typeof animeApi.onScroll !== "function" || reduceMotion.matches) return;
+
+    function makeScrollObserver(target, sync) {
+      var scrollObserver = animeApi.onScroll({
+        target: target,
+        sync: sync
+      });
+      scrollObservers.push(scrollObserver);
+      return scrollObserver;
+    }
+
+    sections.forEach(function (section) {
+      animeApi.animate(section.querySelector(".story-scene-copy"), {
+        y: [68, -26],
+        rotateX: [7, -2],
+        scale: [0.955, 1.012],
+        opacity: [0.44, 1],
+        ease: "linear",
+        autoplay: makeScrollObserver(section, 0.16)
+      });
+    });
+
+    if (!visualStage) return;
+
+    animeApi.animate(visualStage, {
+      y: [18, -18],
+      rotateX: [6, -5],
+      rotateY: [-8, 8],
+      ease: "linear",
+      autoplay: makeScrollObserver(scenesContainer, 0.1)
+    });
+
+    [
+      { selector: ".story-orbit-back", rotate: "1.25turn", scale: 1.08, sync: 0.08 },
+      { selector: ".story-orbit-middle", rotate: "-1.8turn", scale: 0.94, sync: 0.12 },
+      { selector: ".story-orbit-front", rotate: "2.4turn", scale: 1.04, sync: 0.16 }
+    ].forEach(function (orbit) {
+      animeApi.animate(orbit.selector, {
+        rotate: orbit.rotate,
+        scale: orbit.scale,
+        ease: "linear",
+        autoplay: makeScrollObserver(scenesContainer, orbit.sync)
+      });
+    });
+
+    animeApi.animate("[data-story-particles] i", {
+      y: function (_, index) { return index % 2 ? -44 : 38; },
+      x: function (_, index) { return (index % 3 - 1) * 28; },
+      scale: [0.65, 1.3],
+      delay: animeApi.stagger(24),
+      ease: "linear",
+      autoplay: makeScrollObserver(scenesContainer, 0.18)
+    });
+  }
   function startAmbientMotion() {
     if (!animeApi || reduceMotion.matches) return;
 
@@ -250,10 +325,18 @@
       alternate: true,
       loop: true
     });
+    animeApi.animate(".story-visual-core", {
+      scale: [0.985, 1.015],
+      duration: 4800,
+      ease: "inOutSine",
+      alternate: true,
+      loop: true
+    });
   }
 
   document.documentElement.classList.add("story-enhanced");
   var sceneElements = scenes.map(createScene);
+  startScrollLinkedMotion(sceneElements);
   observeScenes(sceneElements);
   activateScene(sceneElements[0]);
   startAmbientMotion();
