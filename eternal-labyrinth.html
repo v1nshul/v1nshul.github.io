@@ -15,68 +15,37 @@ animejs: true
     <div class="story-fog story-fog-one"></div>
     <div class="story-fog story-fog-two"></div>
     <div class="story-grid"></div>
-    <div class="story-vignette"></div>
   </div>
 
   <header class="story-header">
     <p class="story-kicker">interactive story</p>
     <h1>{{ story_post.title | escape }}</h1>
+    <p class="story-scroll-cue"><span aria-hidden="true">&#8595;</span> Scroll to read. The story pauses when a choice is yours.</p>
   </header>
 
-  <div class="story-scroll-cue" aria-hidden="true">
-    <span>scroll to enter</span>
-    <i></i>
+  <div class="story-reader" data-story-reader>
+    <div class="story-scenes" data-story-scenes></div>
+
+    <aside class="story-visual" data-story-visual aria-hidden="true">
+      <div class="story-visual-label">scene signal</div>
+      <div class="story-visual-scan"></div>
+      <div class="story-visual-group visual-mist" data-visual-group="mist"><b></b><b></b><b></b></div>
+      <div class="story-visual-group visual-podium" data-visual-group="podium">
+        <b class="visual-podium-screen"><i></i><i></i><i></i><i></i></b><b class="visual-podium-base"></b>
+      </div>
+      <div class="story-visual-group visual-crossroads" data-visual-group="crossroads"><b></b><b></b><b></b><i></i></div>
+      <div class="story-visual-group visual-signal" data-visual-group="signal">
+        <b class="visual-figure-head"></b><b class="visual-figure-body"></b><i></i><i></i><i></i>
+      </div>
+      <div class="story-visual-group visual-shadow" data-visual-group="shadow"><b></b><i></i><i></i></div>
+      <div class="story-visual-group visual-wake" data-visual-group="wake"><b></b><i></i><i></i><i></i><i></i></div>
+    </aside>
   </div>
 
-  <div class="story-scroll-rail" aria-hidden="true"><span data-story-scroll-progress></span></div>
-
-  <div class="story-stage" data-story-stage>
-    <div class="story-marker" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-
-    <article class="story-panel">
-      <div class="story-copy">
-        <div class="story-progress" aria-label="Story progress">
-          <span data-story-current>01</span>
-          <span aria-hidden="true">/</span>
-          <span data-story-total>01</span>
-        </div>
-
-        <p class="story-text" data-story-text tabindex="-1" aria-live="polite"></p>
-        <div class="story-choices" data-story-choices aria-label="Story choices"></div>
-      </div>
-
-      <div class="story-visual" data-story-visual aria-hidden="true">
-        <div class="story-visual-scan"></div>
-        <div class="story-visual-group visual-mist" data-visual-group="mist">
-          <b></b><b></b><b></b>
-        </div>
-        <div class="story-visual-group visual-podium" data-visual-group="podium">
-          <b class="visual-podium-screen"><i></i><i></i><i></i><i></i></b>
-          <b class="visual-podium-base"></b>
-        </div>
-        <div class="story-visual-group visual-crossroads" data-visual-group="crossroads">
-          <b></b><b></b><b></b><i></i>
-        </div>
-        <div class="story-visual-group visual-signal" data-visual-group="signal">
-          <b class="visual-figure-head"></b><b class="visual-figure-body"></b>
-          <i></i><i></i><i></i>
-        </div>
-        <div class="story-visual-group visual-shadow" data-visual-group="shadow">
-          <b></b><i></i><i></i>
-        </div>
-        <div class="story-visual-group visual-wake" data-visual-group="wake">
-          <b></b><i></i><i></i><i></i><i></i>
-        </div>
-      </div>
-    </article>
-  </div>
-
-  <div class="story-footer">
-    <button class="story-reset" type="button" data-story-reset>restart</button>
+  <footer class="story-footer">
+    <a href="{{ '/eternal-labyrinth/' | relative_url }}">restart the journey</a>
     <a href="{{ story_post.url | relative_url }}">read the original</a>
-  </div>
+  </footer>
 </section>
 
 <article class="story-source post" data-story-source>

@@ -3,43 +3,39 @@
 
   var root = document.querySelector("[data-story-root]");
   var source = document.querySelector("[data-story-source]");
-  var stage = document.querySelector("[data-story-stage]");
-  var storyText = document.querySelector("[data-story-text]");
-  var choices = document.querySelector("[data-story-choices]");
-  var currentLabel = document.querySelector("[data-story-current]");
-  var totalLabel = document.querySelector("[data-story-total]");
-  var resetButton = document.querySelector("[data-story-reset]");
+  var scenesContainer = document.querySelector("[data-story-scenes]");
   var visual = document.querySelector("[data-story-visual]");
-  var scrollProgress = document.querySelector("[data-story-scroll-progress]");
 
-  if (!root || !source || !stage || !storyText || !choices || !resetButton || !visual) return;
+  if (!root || !source || !scenesContainer || !visual) return;
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var animeApi = window.anime || null;
-  var transitioning = false;
+  var activeScene = -1;
+  var visibleScenes = new Map();
+  var observer = null;
 
   function splitIntoScenes(paragraph) {
     var sentences = paragraph.match(/[^.!?]+[.!?]+(?:["')\]]+)?|[^.!?]+$/g) || [paragraph];
-    var scenes = [];
+    var sceneList = [];
     var chunk = "";
 
     sentences.forEach(function (sentence) {
       if (chunk && (chunk + sentence).length > 620) {
-        scenes.push(chunk.trim());
+        sceneList.push(chunk.trim());
         chunk = sentence;
       } else {
         chunk += sentence;
       }
     });
 
-    if (chunk.trim()) scenes.push(chunk.trim());
-    return scenes;
+    if (chunk.trim()) sceneList.push(chunk.trim());
+    return sceneList;
   }
 
   var storyParagraphs = Array.prototype.slice.call(source.querySelectorAll("p"));
   var paragraphScenes = storyParagraphs.map(function (paragraph, index) {
-    if (index === storyParagraphs.length - 1) return [paragraph.textContent.trim()];
-    return splitIntoScenes(paragraph.textContent);
+    var text = paragraph.textContent.trim();
+    return index === storyParagraphs.length - 1 ? [text] : splitIntoScenes(text);
   });
   var endingScene = paragraphScenes.slice(0, -1).reduce(function (count, paragraph) {
     return count + paragraph.length;
@@ -47,31 +43,14 @@
   var scenes = paragraphScenes.reduce(function (allScenes, paragraph) {
     return allScenes.concat(paragraph);
   }, []);
+  var choiceScene = scenes.findIndex(function (text) {
+    return text.indexOf("Left, or right?") !== -1;
+  });
 
   if (!scenes.length) return;
 
   function padSceneNumber(number) {
     return String(number).padStart(2, "0");
-  }
-
-  function choiceLabelsFor(scene) {
-    if (scene === scenes.length - 1) return ["restart", "read the original"];
-    if (scenes[scene].indexOf("Left, or right?") !== -1) return ["left", "right"];
-    return ["continue"];
-  }
-
-  function createChoice(label, action) {
-    var button = document.createElement("button");
-    button.className = "story-choice";
-    button.type = "button";
-    button.textContent = label;
-    button.addEventListener("click", action);
-    choices.appendChild(button);
-  }
-
-  function goToOriginal() {
-    var originalLink = root.querySelector(".story-footer a");
-    if (originalLink) originalLink.click();
   }
 
   function visualModeForScene(scene) {
@@ -89,106 +68,164 @@
     var mode = visualModeForScene(scene);
     var groups = visual.querySelectorAll("[data-visual-group]");
     var active = visual.querySelector('[data-visual-group="' + mode + '"]');
-    root.setAttribute("data-story-visual-mode", mode);
 
+    root.setAttribute("data-story-visual-mode", mode);
     if (!active || !animeApi || reduceMotion.matches) return;
 
     animeApi.utils.set(groups, { opacity: 0 });
     animeApi.animate(visual, {
-      opacity: [0.55, 1],
+      opacity: [0.72, 1],
       scale: [0.985, 1],
       duration: 620,
       ease: "outExpo"
     });
     animeApi.animate(active, {
       opacity: [0, 1],
-      scale: [0.82, 1],
-      rotate: [-3, 0],
+      scale: [0.84, 1],
+      rotate: [-2, 0],
       duration: 760,
       ease: "outExpo"
     });
     animeApi.animate(active.querySelectorAll("b, i"), {
       opacity: [0, 1],
-      delay: animeApi.stagger(85),
-      duration: 680,
+      delay: animeApi.stagger(80),
+      duration: 640,
       ease: "outQuad"
     });
   }
 
-  function renderScene(scene, shouldFocus) {
-    storyText.textContent = scenes[scene];
-    currentLabel.textContent = padSceneNumber(scene + 1);
-    totalLabel.textContent = padSceneNumber(scenes.length);
-    choices.replaceChildren();
+  function activateScene(section) {
+    var nextScene = Number(section.dataset.sceneIndex);
+    if (nextScene === activeScene) return;
 
-    choiceLabelsFor(scene).forEach(function (label) {
-      if (label === "restart") {
-        createChoice(label, function () { transitionTo(0); });
-      } else if (label === "read the original") {
-        createChoice(label, goToOriginal);
-      } else if (label === "right") {
-        createChoice(label, function () { transitionTo(endingScene); });
-      } else {
-        createChoice(label, function () { transitionTo(scene + 1); });
-      }
-    });
+    var previous = scenesContainer.querySelector(".story-scroll-scene.is-active");
+    if (previous) previous.classList.remove("is-active");
 
-    renderVisual(scene);
-    if (shouldFocus) storyText.focus({ preventScroll: true });
-  }
+    activeScene = nextScene;
+    section.classList.add("is-active");
+    renderVisual(nextScene);
 
-  function setChoicesDisabled(disabled) {
-    choices.querySelectorAll("button").forEach(function (button) {
-      button.disabled = disabled;
-    });
-  }
-
-  function revealScene() {
-    if (!animeApi || reduceMotion.matches) {
-      transitioning = false;
-      return;
-    }
-
-    animeApi.animate(storyText, {
-      opacity: [0, 1],
-      y: [16, 0],
-      duration: 520,
+    if (!animeApi || reduceMotion.matches) return;
+    animeApi.animate(section.querySelector(".story-scene-copy"), {
+      opacity: [0.45, 1],
+      y: [34, 0],
+      duration: 720,
       ease: "outExpo"
     });
+  }
 
-    animeApi.animate(choices.querySelectorAll(".story-choice"), {
-      opacity: [0, 1],
-      y: [10, 0],
-      delay: animeApi.stagger(90),
-      duration: 420,
-      ease: "outQuad",
-      onComplete: function () {
-        transitioning = false;
+  function chooseRoute(direction, button) {
+    var sections = scenesContainer.querySelectorAll(".story-scroll-scene");
+    var destination = direction === "right" ? endingScene : choiceScene + 1;
+
+    root.dataset.storyRoute = direction;
+    sections.forEach(function (section, index) {
+      if (index <= choiceScene) return;
+      section.hidden = direction === "right" ? index !== endingScene : false;
+    });
+
+    var choiceBlock = button.closest(".story-choices");
+    if (choiceBlock) {
+      var decision = document.createElement("p");
+      decision.className = "story-decision";
+      decision.textContent = direction;
+      choiceBlock.replaceWith(decision);
+    }
+
+    window.requestAnimationFrame(function () {
+      var target = scenesContainer.querySelector('[data-scene-index="' + destination + '"]');
+      if (target) {
+        target.scrollIntoView({
+          behavior: reduceMotion.matches ? "auto" : "smooth",
+          block: "center"
+        });
       }
     });
   }
 
-  function transitionTo(scene) {
-    if (transitioning || scene < 0 || scene >= scenes.length) return;
-    transitioning = true;
-    setChoicesDisabled(true);
+  function makeChoice(label) {
+    var button = document.createElement("button");
+    button.className = "story-choice";
+    button.type = "button";
+    button.textContent = label;
+    button.addEventListener("click", function () {
+      chooseRoute(label, button);
+    });
+    return button;
+  }
 
-    if (!animeApi || reduceMotion.matches) {
-      renderScene(scene, true);
-      transitioning = false;
+  function createScene(text, index) {
+    var section = document.createElement("section");
+    var copy = document.createElement("div");
+    var progress = document.createElement("p");
+    var paragraph = document.createElement("p");
+
+    section.className = "story-scroll-scene";
+    section.id = "story-scene-" + (index + 1);
+    section.dataset.sceneIndex = String(index);
+    section.setAttribute("aria-label", "Story scene " + (index + 1) + " of " + scenes.length);
+
+    copy.className = "story-scene-copy";
+    progress.className = "story-progress";
+    progress.textContent = padSceneNumber(index + 1) + " / " + padSceneNumber(scenes.length);
+    paragraph.className = "story-text";
+    paragraph.textContent = text;
+
+    copy.appendChild(progress);
+    copy.appendChild(paragraph);
+
+    if (index === choiceScene) {
+      var choiceBlock = document.createElement("div");
+      choiceBlock.className = "story-choices";
+      choiceBlock.setAttribute("aria-label", "Choose a direction");
+      choiceBlock.appendChild(makeChoice("left"));
+      choiceBlock.appendChild(makeChoice("right"));
+      copy.appendChild(choiceBlock);
+      section.dataset.choiceScene = "true";
+    }
+
+    if (choiceScene !== -1 && index > choiceScene) section.hidden = true;
+    section.appendChild(copy);
+    scenesContainer.appendChild(section);
+    return section;
+  }
+
+  function observeScenes(sections) {
+    if (!("IntersectionObserver" in window)) {
+      sections.forEach(function (section) {
+        section.classList.add("is-active");
+        section.style.opacity = "1";
+      });
+      renderVisual(0);
       return;
     }
 
-    animeApi.animate([storyText, choices], {
-      opacity: 0,
-      y: -10,
-      duration: 240,
-      ease: "inQuad",
-      onComplete: function () {
-        renderScene(scene, true);
-        animeApi.utils.set([storyText, choices], { opacity: 1, y: 0 });
-        revealScene();
-      }
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          visibleScenes.set(entry.target, entry.intersectionRatio);
+        } else {
+          visibleScenes.delete(entry.target);
+        }
+      });
+
+      var bestSection = null;
+      var bestRatio = -1;
+      visibleScenes.forEach(function (ratio, section) {
+        if (!section.hidden && ratio > bestRatio) {
+          bestSection = section;
+          bestRatio = ratio;
+        }
+      });
+      if (bestSection) activateScene(bestSection);
+    }, {
+      root: null,
+      rootMargin: "-24% 0px -42% 0px",
+      threshold: [0, 0.15, 0.35, 0.6]
+    });
+
+    sections.forEach(function (section) {
+      observer.observe(section);
     });
   }
 
@@ -196,93 +233,28 @@
     if (!animeApi || reduceMotion.matches) return;
 
     animeApi.animate(".story-fog-one", {
-      x: ["-4vw", "7vw"],
-      y: ["-2vh", "8vh"],
-      scale: [0.92, 1.08],
+      x: ["-3vw", "5vw"],
+      y: ["-2vh", "5vh"],
+      scale: [0.94, 1.06],
       duration: 14000,
       ease: "inOutSine",
       alternate: true,
       loop: true
     });
-
     animeApi.animate(".story-fog-two", {
-      x: ["5vw", "-8vw"],
-      y: ["4vh", "-5vh"],
-      scale: [1.08, 0.9],
+      x: ["4vw", "-6vw"],
+      y: ["3vh", "-4vh"],
+      scale: [1.06, 0.94],
       duration: 17000,
       ease: "inOutSine",
       alternate: true,
       loop: true
     });
-
-    animeApi.animate(".story-marker span", {
-      opacity: [0.22, 0.9],
-      scaleX: [0.65, 1],
-      delay: animeApi.stagger(180),
-      duration: 1800,
-      ease: "inOutSine",
-      alternate: true,
-      loop: true
-    });
   }
 
-  function startScrollMotion() {
-    if (reduceMotion.matches) return;
-
-    var framePending = false;
-
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
-    }
-
-    function updateScrollState() {
-      var bounds = root.getBoundingClientRect();
-      var distance = Math.max(root.offsetHeight - window.innerHeight, 1);
-      var progress = clamp(-bounds.top / distance, 0, 1);
-      var cueProgress = clamp(progress * 4.5, 0, 1);
-      var panelProgress = clamp(progress * 1.9, 0, 1);
-
-      framePending = false;
-      root.style.setProperty("--story-scroll-progress", progress.toFixed(4));
-      root.style.setProperty("--story-title-y", (-82 * progress).toFixed(2) + "px");
-      root.style.setProperty("--story-title-opacity", (1 - progress * 0.78).toFixed(3));
-      root.style.setProperty("--story-title-scale", (1 - progress * 0.055).toFixed(4));
-      root.style.setProperty("--story-grid-y", (22 + progress * 31).toFixed(2) + "%");
-      root.style.setProperty("--story-grid-rotate", (-13 + progress * 7).toFixed(2) + "deg");
-      root.style.setProperty("--story-grid-scale", (1 + progress * 0.14).toFixed(4));
-      root.style.setProperty("--story-cue-opacity", (1 - cueProgress).toFixed(3));
-      root.style.setProperty("--story-cue-y", (-38 * cueProgress).toFixed(2) + "px");
-      root.style.setProperty("--story-visual-y", (-24 * progress).toFixed(2) + "px");
-      root.style.setProperty("--story-panel-y", (42 * (1 - panelProgress)).toFixed(2) + "px");
-      root.style.setProperty("--story-panel-opacity", (0.3 + panelProgress * 0.7).toFixed(3));
-
-      if (scrollProgress) scrollProgress.style.transform = "scaleY(" + progress.toFixed(4) + ")";
-    }
-
-    function requestScrollUpdate() {
-      if (framePending) return;
-      framePending = true;
-      window.requestAnimationFrame(updateScrollState);
-    }
-
-    window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-    window.addEventListener("resize", requestScrollUpdate);
-    updateScrollState();
-  }
   document.documentElement.classList.add("story-enhanced");
-  renderScene(0, false);
-  resetButton.addEventListener("click", function () { transitionTo(0); });
-  startScrollMotion();
-
-  if (animeApi && !reduceMotion.matches) {
-    transitioning = true;
-    animeApi.animate(stage, {
-      opacity: [0, 1],
-      y: [24, 0],
-      duration: 900,
-      ease: "outExpo"
-    });
-    revealScene();
-    startAmbientMotion();
-  }
+  var sceneElements = scenes.map(createScene);
+  observeScenes(sceneElements);
+  activateScene(sceneElements[0]);
+  startAmbientMotion();
 })();
