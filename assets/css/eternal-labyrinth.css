@@ -1,0 +1,275 @@
+.story-shell {
+  --story-bg: #060a09;
+  --story-panel: rgba(7, 15, 13, 0.82);
+  --story-ink: #e4eee9;
+  --story-muted: #94aaa1;
+  --story-accent: #9ee8bd;
+  --story-line: rgba(158, 232, 189, 0.24);
+  position: relative;
+  width: min(1120px, calc(100vw - 32px));
+  min-height: min(780px, calc(100vh - 104px));
+  margin: 24px 50% 0;
+  padding: clamp(24px, 4vw, 52px);
+  overflow: hidden;
+  border: 1px solid #253c33;
+  background: var(--story-bg);
+  color: var(--story-ink);
+  isolation: isolate;
+  transform: translateX(-50%);
+}
+
+.story-atmosphere,
+.story-grid,
+.story-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.story-atmosphere {
+  z-index: -1;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 58% 22%, rgba(34, 94, 68, 0.18), transparent 34%),
+    linear-gradient(145deg, #09110e 0%, #040706 70%);
+}
+
+.story-grid {
+  inset: -32%;
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(139, 226, 179, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 226, 179, 0.14) 1px, transparent 1px);
+  background-size: 68px 68px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 7%, black 55%, transparent 92%);
+  mask-image: linear-gradient(to bottom, transparent 7%, black 55%, transparent 92%);
+  transform: perspective(620px) rotateX(66deg) rotateZ(-13deg) translateY(22%);
+  transform-origin: center;
+}
+
+.story-fog {
+  position: absolute;
+  width: 52vw;
+  height: 52vw;
+  border-radius: 50%;
+  background: rgba(121, 217, 165, 0.09);
+  filter: blur(72px);
+  will-change: transform;
+}
+
+.story-fog-one {
+  top: -32%;
+  left: -18%;
+}
+
+.story-fog-two {
+  right: -24%;
+  bottom: -38%;
+  background: rgba(79, 144, 114, 0.11);
+}
+
+.story-vignette {
+  box-shadow: inset 0 0 160px 24px rgba(0, 0, 0, 0.76);
+}
+
+.story-header {
+  max-width: 760px;
+}
+
+.story-kicker {
+  margin-bottom: 10px;
+  color: var(--story-accent);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.story-header h1 {
+  color: var(--story-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5.8vw, 4.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.story-stage {
+  display: none;
+  position: relative;
+  min-height: 430px;
+  margin-top: clamp(42px, 8vh, 92px);
+  align-items: end;
+}
+
+.story-enhanced .story-stage {
+  display: grid;
+}
+
+.story-marker {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.story-marker span {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: var(--story-line);
+}
+
+.story-marker span:nth-child(2) {
+  width: 42px;
+  transform: translateX(-16px);
+}
+
+.story-panel {
+  position: relative;
+  width: min(780px, 100%);
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid var(--story-line);
+  background: var(--story-panel);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(14px);
+}
+
+.story-panel::before {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 72px;
+  border-top: 1px solid var(--story-accent);
+  content: "";
+}
+
+.story-progress {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 18px;
+  color: var(--story-muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+.story-text {
+  min-height: 7.4em;
+  margin: 0;
+  color: var(--story-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.03rem, 2vw, 1.22rem);
+  line-height: 1.72;
+}
+
+.story-text:focus {
+  outline: none;
+}
+
+.story-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.story-choice,
+.story-reset {
+  border: 1px solid var(--story-line);
+  background: rgba(158, 232, 189, 0.04);
+  color: var(--story-ink);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.story-choice {
+  min-width: 132px;
+  padding: 10px 16px;
+  text-align: left;
+}
+
+.story-choice::before {
+  margin-right: 9px;
+  color: var(--story-accent);
+  content: ">";
+}
+
+.story-choice:hover,
+.story-reset:hover {
+  border-color: var(--story-accent);
+  background: rgba(158, 232, 189, 0.1);
+}
+
+.story-choice:focus-visible,
+.story-reset:focus-visible,
+.story-footer a:focus-visible {
+  outline: 2px solid var(--story-accent);
+  outline-offset: 3px;
+}
+
+.story-choice:disabled {
+  cursor: wait;
+  opacity: 0.52;
+}
+
+.story-footer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 24px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.7rem;
+}
+
+.story-reset {
+  padding: 5px 8px;
+}
+
+.story-footer a {
+  color: var(--story-muted);
+}
+
+.story-source {
+  margin-top: 54px;
+}
+
+.story-enhanced .story-source {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .story-shell {
+    width: calc(100vw - 20px);
+    min-height: calc(100vh - 80px);
+    margin-top: 10px;
+    padding: 24px 18px;
+  }
+
+  .story-stage {
+    min-height: 480px;
+    margin-top: 36px;
+  }
+
+  .story-panel {
+    padding: 22px 19px;
+  }
+
+  .story-text {
+    min-height: 10em;
+  }
+
+  .story-choice {
+    flex: 1 1 130px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-fog {
+    display: none;
+  }
+}

@@ -18,6 +18,7 @@
       })();
     </script>
     <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+    {% if page.stylesheet %}<link rel="stylesheet" href="{{ page.stylesheet | relative_url }}" />{% endif %}
   </head>
   <body>
     <main class="container">
@@ -89,5 +90,9 @@
         });
       })();
     </script>
+    {% if page.animejs %}
+    <script src="{{ '/assets/js/anime.umd.min.js' | relative_url }}"></script>
+    {% endif %}
+    {% if page.script %}<script src="{{ page.script | relative_url }}"></script>{% endif %}
   </body>
 </html>

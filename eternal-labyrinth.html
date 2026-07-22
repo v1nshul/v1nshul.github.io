@@ -1,0 +1,51 @@
+---
+layout: default
+title: "Eternal Labyrinth: A Journey Through Reality and Illusion"
+description: "An interactive presentation of Eternal Labyrinth."
+permalink: /eternal-labyrinth/
+stylesheet: /assets/css/eternal-labyrinth.css
+script: /assets/js/eternal-labyrinth.js
+animejs: true
+---
+
+{% assign story_post = site.posts | where: "title", "Eternal Labyrinth: A Journey Through Reality and Illusion" | first %}
+
+<section class="story-shell" id="eternal-labyrinth" data-story-root>
+  <div class="story-atmosphere" aria-hidden="true">
+    <div class="story-fog story-fog-one"></div>
+    <div class="story-fog story-fog-two"></div>
+    <div class="story-grid"></div>
+    <div class="story-vignette"></div>
+  </div>
+
+  <header class="story-header">
+    <p class="story-kicker">interactive story</p>
+    <h1>{{ story_post.title | escape }}</h1>
+  </header>
+
+  <div class="story-stage" data-story-stage>
+    <div class="story-marker" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+
+    <article class="story-panel">
+      <div class="story-progress" aria-label="Story progress">
+        <span data-story-current>01</span>
+        <span aria-hidden="true">/</span>
+        <span data-story-total>01</span>
+      </div>
+
+      <p class="story-text" data-story-text tabindex="-1" aria-live="polite"></p>
+      <div class="story-choices" data-story-choices aria-label="Story choices"></div>
+    </article>
+  </div>
+
+  <div class="story-footer">
+    <button class="story-reset" type="button" data-story-reset>restart</button>
+    <a href="{{ story_post.url | relative_url }}">read the original</a>
+  </div>
+</section>
+
+<article class="story-source post" data-story-source>
+  {{ story_post.content }}
+</article>

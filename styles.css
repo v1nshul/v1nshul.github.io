@@ -429,6 +429,20 @@ p {
   font-style: italic;
 }
 
+.post-experience-link {
+  display: inline-block;
+  margin: 0 0 24px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.76rem;
+  text-decoration: none;
+}
+
+.post-experience-link:hover {
+  border-color: var(--faint);
+}
+
 .footer {
   display: flex;
   gap: 18px;

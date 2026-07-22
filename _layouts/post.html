@@ -5,5 +5,8 @@ layout: default
   <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
   <h1>{{ page.title | escape }}</h1>
   {% if page.summary %}<p class="summary">{{ page.summary }}</p>{% endif %}
+  {% if page.interactive_url %}
+    <a class="post-experience-link" href="{{ page.interactive_url | relative_url }}">enter the interactive version <span aria-hidden="true">&rarr;</span></a>
+  {% endif %}
   {{ content }}
 </article>
