@@ -79,7 +79,18 @@
       group.classList.toggle("is-visual-active", group === active);
     });
 
-    if (!animeApi || reduceMotion.matches) return;
+    if (!animeApi) return;
+
+    if (reduceMotion.matches) {
+      animeApi.utils.set(groups, { opacity: 0 });
+      animeApi.animate(active, {
+        opacity: [0, 1],
+        scale: [0.94, 1],
+        duration: 420,
+        ease: "outQuad"
+      });
+      return;
+    }
 
     if (previous && previous !== active) {
       animeApi.animate(previous, {
@@ -250,11 +261,45 @@
   }
 
   function startScrollLinkedMotion(sections) {
-    if (!animeApi || typeof animeApi.onScroll !== "function" || reduceMotion.matches) return;
+    var motionScale = 1;
+
+    if (!animeApi || typeof animeApi.onScroll !== "function") {
+      root.dataset.motionEngine = "native-fallback";
+      var ticking = false;
+
+      function updateFallbackDepth() {
+        var bounds = scenesContainer.getBoundingClientRect();
+        var distance = Math.max(bounds.height + window.innerHeight, 1);
+        var progress = Math.min(Math.max((window.innerHeight - bounds.top) / distance, 0), 1);
+        var tiltX = (16 - progress * 30) * motionScale;
+        var tiltY = (-22 + progress * 44) * motionScale;
+
+        ticking = false;
+        root.dataset.motionProgress = progress.toFixed(3);
+        if (visualStage) {
+          visualStage.style.transform = "perspective(900px) rotateX(" + tiltX + "deg) rotateY(" + tiltY + "deg) translate3d(0," + ((55 - progress * 110) * motionScale) + "px," + ((-80 + progress * 160) * motionScale) + "px)";
+        }
+      }
+
+      function requestFallbackDepth() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateFallbackDepth);
+      }
+
+      window.addEventListener("scroll", requestFallbackDepth, { passive: true });
+      window.addEventListener("resize", requestFallbackDepth);
+      updateFallbackDepth();
+      return;
+    }
+
+    root.dataset.motionEngine = "anime-scroll";
 
     function makeScrollObserver(target, sync) {
       var scrollObserver = animeApi.onScroll({
         target: target,
+        enter: { target: "top", container: "bottom" },
+        leave: { target: "bottom", container: "top" },
         sync: sync
       });
       scrollObservers.push(scrollObserver);
@@ -263,47 +308,80 @@
 
     sections.forEach(function (section) {
       animeApi.animate(section.querySelector(".story-scene-copy"), {
-        y: [68, -26],
-        rotateX: [7, -2],
-        scale: [0.955, 1.012],
-        opacity: [0.44, 1],
+        y: [112 * motionScale, -72 * motionScale],
+        z: [-110 * motionScale, 52 * motionScale],
+        rotateX: [14 * motionScale, -7 * motionScale],
+        rotateY: [-5 * motionScale, 3 * motionScale],
+        scale: [0.9, 1.035],
+        opacity: [0.18, 1],
         ease: "linear",
-        autoplay: makeScrollObserver(section, 0.16)
+        autoplay: makeScrollObserver(section, 0.14)
       });
     });
 
     if (!visualStage) return;
 
+    var stageScroll = makeScrollObserver(scenesContainer, 0.12);
     animeApi.animate(visualStage, {
-      y: [18, -18],
-      rotateX: [6, -5],
-      rotateY: [-8, 8],
+      y: [58 * motionScale, -58 * motionScale],
+      z: [-150 * motionScale, 150 * motionScale],
+      rotateX: [28 * motionScale, -22 * motionScale],
+      rotateY: [-38 * motionScale, 38 * motionScale],
+      scale: [0.76, 1.12],
       ease: "linear",
-      autoplay: makeScrollObserver(scenesContainer, 0.1)
+      onUpdate: function (animation) {
+        root.dataset.motionProgress = Number(animation.progress || 0).toFixed(3);
+      },
+      autoplay: stageScroll
+    });
+
+    animeApi.animate(".story-visual-core", {
+      rotateX: [-10 * motionScale, 12 * motionScale],
+      rotateY: [13 * motionScale, -15 * motionScale],
+      rotate: [-9 * motionScale, 15 * motionScale],
+      scale: [0.78, 1.13],
+      ease: "linear",
+      autoplay: makeScrollObserver(scenesContainer, 0.16)
     });
 
     [
-      { selector: ".story-orbit-back", rotate: "1.25turn", scale: 1.08, sync: 0.08 },
-      { selector: ".story-orbit-middle", rotate: "-1.8turn", scale: 0.94, sync: 0.12 },
-      { selector: ".story-orbit-front", rotate: "2.4turn", scale: 1.04, sync: 0.16 }
+      { selector: ".story-orbit-back", rotate: "3.25turn", rotateX: [68, 52], rotateY: [-5, 8], scale: 1.18, z: 70, sync: 0.08 },
+      { selector: ".story-orbit-middle", rotate: "-2.4turn", rotateX: [34, 8], rotateY: [-26, -10], scale: 0.86, z: -35, sync: 0.11 },
+      { selector: ".story-orbit-front", rotate: "4.6turn", rotateX: [-30, -9], rotateY: [32, 14], scale: 1.12, z: 115, sync: 0.15 }
     ].forEach(function (orbit) {
       animeApi.animate(orbit.selector, {
         rotate: orbit.rotate,
+        rotateX: orbit.rotateX,
+        rotateY: orbit.rotateY,
         scale: orbit.scale,
+        z: orbit.z,
         ease: "linear",
         autoplay: makeScrollObserver(scenesContainer, orbit.sync)
       });
     });
 
     animeApi.animate("[data-story-particles] i", {
-      y: function (_, index) { return index % 2 ? -44 : 38; },
-      x: function (_, index) { return (index % 3 - 1) * 28; },
-      scale: [0.65, 1.3],
-      delay: animeApi.stagger(24),
+      y: function (_, index) { return (index % 2 ? -95 : 86) * motionScale; },
+      x: function (_, index) { return (index % 3 - 1) * 72 * motionScale; },
+      z: function (_, index) { return (index % 2 ? 170 : -130) * motionScale; },
+      scale: [0.45, 2],
+      opacity: [0.22, 1],
+      delay: animeApi.stagger(18, { from: "center" }),
       ease: "linear",
       autoplay: makeScrollObserver(scenesContainer, 0.18)
     });
+
+    animeApi.animate("[data-story-motion-path] b", {
+      opacity: [0.08, 1],
+      scale: [0.3, 1.9],
+      z: [-130 * motionScale, 180 * motionScale],
+      rotate: ["-0.25turn", "0.75turn"],
+      delay: animeApi.stagger(42),
+      ease: "linear",
+      autoplay: makeScrollObserver(scenesContainer, 0.2)
+    });
   }
+
   function startAmbientMotion() {
     if (!animeApi || reduceMotion.matches) return;
 
@@ -325,13 +403,7 @@
       alternate: true,
       loop: true
     });
-    animeApi.animate(".story-visual-core", {
-      scale: [0.985, 1.015],
-      duration: 4800,
-      ease: "inOutSine",
-      alternate: true,
-      loop: true
-    });
+
   }
 
   document.documentElement.classList.add("story-enhanced");
