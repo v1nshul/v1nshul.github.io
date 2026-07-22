@@ -173,6 +173,60 @@
     });
   }
 
+  function startScrollMotion() {
+    if (!animeApi || !animeApi.onScroll || reduceMotion.matches) return;
+
+    function rootScrollRange() {
+      return animeApi.onScroll({
+        target: root,
+        enter: "top top",
+        leave: "bottom bottom",
+        sync: 0.16
+      });
+    }
+
+    animeApi.animate(".story-header", {
+      opacity: [1, 0.18],
+      y: [0, -90],
+      scale: [1, 0.94],
+      ease: "linear",
+      autoplay: rootScrollRange()
+    });
+
+    animeApi.animate(".story-grid", {
+      y: ["22%", "48%"],
+      rotateZ: ["-13deg", "-6deg"],
+      scale: [1, 1.12],
+      ease: "linear",
+      autoplay: rootScrollRange()
+    });
+
+    animeApi.animate(".story-scroll-cue", {
+      opacity: [1, 0],
+      y: [0, -34],
+      ease: "linear",
+      autoplay: animeApi.onScroll({
+        target: root,
+        enter: "top top",
+        leave: "top+=280 top",
+        sync: 0.2
+      })
+    });
+
+    animeApi.animate(".story-panel", {
+      opacity: [0.14, 1],
+      y: [70, 0],
+      scale: [0.97, 1],
+      ease: "linear",
+      autoplay: animeApi.onScroll({
+        target: stage,
+        enter: "top bottom",
+        leave: "center center",
+        sync: 0.2
+      })
+    });
+  }
+
   document.documentElement.classList.add("story-enhanced");
   renderScene(0, false);
   resetButton.addEventListener("click", function () { transitionTo(0); });
@@ -187,5 +241,6 @@
     });
     revealScene();
     startAmbientMotion();
+    startScrollMotion();
   }
 })();

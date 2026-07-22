@@ -304,17 +304,41 @@ p {
   border-top: 1px solid var(--line);
 }
 
-.post-list a {
+.post-list-item {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 24px;
   padding: 9px 0;
   border-bottom: 1px solid var(--line);
+}
+
+.post-list-title {
   text-decoration: none;
 }
 
-.post-list a:hover span {
+.post-list-title:hover span {
   text-decoration: underline;
+}
+
+.post-list-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.post-list-interactive {
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.65rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.post-list-interactive:hover {
+  border-color: var(--faint);
+  color: var(--ink);
 }
 
 .post-list time,
@@ -496,6 +520,11 @@ p {
 
   .project-grid {
     grid-template-columns: 1fr;
+  }
+
+  .post-list-item {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 
 }

@@ -24,10 +24,17 @@ layout: default
   <h2>Writing</h2>
   <div class="post-list">
     {% for post in site.posts %}
-      <a href="{{ post.url | relative_url }}">
-        <span>{{ post.title }}</span>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-      </a>
+      <div class="post-list-item">
+        <a class="post-list-title" href="{{ post.url | relative_url }}">
+          <span>{{ post.title }}</span>
+        </a>
+        <div class="post-list-meta">
+          {% if post.interactive_url %}
+            <a class="post-list-interactive" href="{{ post.interactive_url | relative_url }}">interactive</a>
+          {% endif %}
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+        </div>
+      </div>
     {% endfor %}
   </div>
 </section>

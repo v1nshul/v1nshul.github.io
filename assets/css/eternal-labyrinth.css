@@ -7,7 +7,7 @@
   --story-line: rgba(158, 232, 189, 0.24);
   position: relative;
   width: min(1120px, calc(100vw - 32px));
-  min-height: min(780px, calc(100vh - 104px));
+  min-height: max(900px, calc(138vh - 104px));
   margin: 24px 50% 0;
   padding: clamp(24px, 4vw, 52px);
   overflow: hidden;
@@ -74,6 +74,8 @@
 
 .story-header {
   max-width: 760px;
+  transform-origin: left top;
+  will-change: transform, opacity;
 }
 
 .story-kicker {
@@ -99,7 +101,7 @@
   display: none;
   position: relative;
   min-height: 430px;
-  margin-top: clamp(42px, 8vh, 92px);
+  margin-top: clamp(190px, 32vh, 330px);
   align-items: end;
 }
 
@@ -125,6 +127,45 @@
 .story-marker span:nth-child(2) {
   width: 42px;
   transform: translateX(-16px);
+}
+
+.story-scroll-cue {
+  position: absolute;
+  top: clamp(300px, 45vh, 420px);
+  left: clamp(24px, 4vw, 52px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--story-muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.story-scroll-cue i {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 1px;
+  overflow: hidden;
+  background: var(--story-line);
+}
+
+.story-scroll-cue i::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--story-accent), transparent);
+  content: "";
+  transform: translateX(-100%);
+  animation: story-cue-scan 2.2s ease-in-out infinite;
+}
+
+@keyframes story-cue-scan {
+  50%,
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .story-panel {
@@ -245,14 +286,14 @@
 @media (max-width: 720px) {
   .story-shell {
     width: calc(100vw - 20px);
-    min-height: calc(100vh - 80px);
+    min-height: max(940px, calc(145vh - 80px));
     margin-top: 10px;
     padding: 24px 18px;
   }
 
   .story-stage {
     min-height: 480px;
-    margin-top: 36px;
+    margin-top: 260px;
   }
 
   .story-panel {
@@ -271,5 +312,9 @@
 @media (prefers-reduced-motion: reduce) {
   .story-fog {
     display: none;
+  }
+
+  .story-scroll-cue i::after {
+    animation: none;
   }
 }
