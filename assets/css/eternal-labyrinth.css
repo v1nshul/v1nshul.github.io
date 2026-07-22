@@ -1147,6 +1147,333 @@
   to { transform: translateX(-50%) scale(1.04); }
 }
 
+/* Eternal Labyrinth terminal theme */
+.story-enhanced body {
+  --bg: #020705;
+  --ink: #d9e8df;
+  --muted: #8ba99a;
+  --faint: #5f796c;
+  --line: #1b4930;
+  --soft: #07110d;
+  --link: #68ee91;
+  --link-hover: #a3ffbd;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(31, 118, 63, 0.12), transparent 31rem),
+    radial-gradient(circle at 12% 76%, rgba(20, 89, 47, 0.09), transparent 38rem),
+    linear-gradient(145deg, #020705 0%, #010302 70%);
+  color: var(--ink);
+}
+
+.story-enhanced .site-nav {
+  border-color: rgba(104, 238, 145, 0.2);
+}
+
+.story-enhanced .site-nav a {
+  color: var(--muted);
+}
+
+.story-enhanced .site-nav a:hover,
+.story-enhanced .site-nav a:focus-visible {
+  color: var(--link);
+}
+
+.story-enhanced #theme-toggle {
+  border-color: var(--line);
+  background: #06100b;
+  color: var(--muted);
+}
+
+.story-shell {
+  --story-bg: #020806;
+  --story-panel: #07110d;
+  --story-ink: #d9e8df;
+  --story-muted: #89a898;
+  --story-accent: #68ee91;
+  --story-line: #1b5133;
+  --story-glow: rgba(60, 236, 116, 0.22);
+  --story-haze: rgba(66, 222, 111, 0.07);
+  border-color: rgba(86, 225, 128, 0.28);
+  background:
+    linear-gradient(rgba(3, 11, 7, 0.68), rgba(1, 5, 3, 0.88)),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(82, 225, 125, 0.028) 80px),
+    #020806;
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.55),
+    inset 0 1px rgba(126, 255, 165, 0.06);
+}
+
+:root[data-theme="dark"] .story-shell {
+  --story-glow: rgba(60, 236, 116, 0.22);
+  --story-haze: rgba(66, 222, 111, 0.07);
+}
+
+.story-atmosphere {
+  background:
+    radial-gradient(circle at 72% 22%, rgba(49, 200, 96, 0.09), transparent 28%),
+    radial-gradient(circle at 18% 62%, rgba(28, 126, 62, 0.08), transparent 34%),
+    linear-gradient(150deg, rgba(8, 25, 15, 0.38), transparent 58%);
+}
+
+.story-atmosphere::before,
+.story-atmosphere::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.story-atmosphere::before {
+  inset: 0;
+  opacity: 0.26;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgba(112, 255, 154, 0.045) 4px,
+    transparent 5px
+  );
+  mix-blend-mode: screen;
+}
+
+.story-atmosphere::after {
+  z-index: 4;
+  right: 0;
+  left: 0;
+  height: 2px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent 6%, rgba(104, 238, 145, 0.65), transparent 82%);
+  box-shadow: 0 0 18px rgba(104, 238, 145, 0.32);
+  animation: story-glitch-sweep 9s steps(1, end) infinite;
+}
+
+.story-grid {
+  opacity: 0.48;
+  background-image:
+    linear-gradient(rgba(92, 229, 133, 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92, 229, 133, 0.065) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at 52% 34%, black 8%, transparent 72%);
+  mask-image: radial-gradient(ellipse at 52% 34%, black 8%, transparent 72%);
+}
+
+.story-fog {
+  background: rgba(52, 205, 99, 0.1);
+  opacity: 0.46;
+}
+
+.story-header h1 {
+  color: #e0f3e6;
+  text-shadow:
+    1px 0 rgba(103, 255, 149, 0.14),
+    -1px 0 rgba(30, 132, 65, 0.16),
+    0 0 34px rgba(70, 222, 114, 0.07);
+  animation: story-title-glitch 10s steps(1, end) infinite;
+}
+
+.story-kicker {
+  text-shadow: 0 0 12px rgba(104, 238, 145, 0.36);
+}
+
+.story-scroll-cue span {
+  border-color: rgba(104, 238, 145, 0.42);
+  background: rgba(23, 84, 43, 0.14);
+  box-shadow: inset 0 0 12px rgba(104, 238, 145, 0.08);
+}
+
+.story-scene-copy {
+  border-color: rgba(95, 204, 127, 0.22);
+  border-left-color: rgba(95, 204, 127, 0.28);
+  background:
+    linear-gradient(135deg, rgba(10, 25, 16, 0.94), rgba(3, 12, 7, 0.91)),
+    repeating-linear-gradient(to bottom, transparent 0 5px, rgba(95, 220, 133, 0.02) 6px);
+  box-shadow:
+    0 22px 62px rgba(0, 0, 0, 0.48),
+    inset 0 1px rgba(151, 255, 182, 0.035);
+  backdrop-filter: blur(14px);
+}
+
+.story-scroll-scene.is-active .story-scene-copy {
+  border-color: rgba(104, 238, 145, 0.3);
+  border-left-color: var(--story-accent);
+  box-shadow:
+    0 28px 76px rgba(0, 0, 0, 0.56),
+    0 0 42px rgba(54, 212, 102, 0.09),
+    inset 0 0 32px rgba(44, 170, 83, 0.025);
+}
+
+.story-progress {
+  color: #789788;
+  text-shadow: 0 0 8px rgba(104, 238, 145, 0.18);
+}
+
+.story-text {
+  color: var(--story-ink);
+  text-shadow: 0 1px rgba(0, 0, 0, 0.54);
+}
+
+.story-choice {
+  border-color: rgba(104, 238, 145, 0.34);
+  background: rgba(4, 17, 9, 0.92);
+  color: #dcebe1;
+  box-shadow: inset 0 0 16px rgba(68, 225, 112, 0.025);
+}
+
+.story-choice:hover {
+  border-color: var(--story-accent);
+  background: rgba(24, 83, 42, 0.3);
+  box-shadow:
+    inset 0 0 18px rgba(104, 238, 145, 0.07),
+    0 0 18px rgba(104, 238, 145, 0.08);
+}
+
+.story-decision {
+  color: #75f39a;
+  text-shadow: 0 0 10px rgba(104, 238, 145, 0.24);
+}
+
+.story-visual {
+  border-color: rgba(94, 224, 133, 0.3);
+  background:
+    radial-gradient(circle at 50% 46%, rgba(56, 219, 105, 0.13), transparent 43%),
+    repeating-linear-gradient(to bottom, transparent 0 5px, rgba(102, 255, 148, 0.025) 6px),
+    linear-gradient(145deg, #06120c, #010503);
+  box-shadow:
+    0 35px 95px rgba(0, 0, 0, 0.64),
+    inset 0 0 85px rgba(38, 155, 73, 0.08);
+}
+
+.story-visual::before {
+  opacity: 0.62;
+  background-image:
+    linear-gradient(rgba(82, 222, 124, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 222, 124, 0.07) 1px, transparent 1px);
+}
+
+.story-visual::after {
+  border-color: rgba(104, 238, 145, 0.13);
+  box-shadow:
+    inset 0 0 32px rgba(0, 0, 0, 0.42),
+    0 0 20px rgba(61, 211, 106, 0.035);
+}
+
+.story-visual-label {
+  color: #719481;
+  text-shadow: 0 0 8px rgba(104, 238, 145, 0.2);
+}
+
+.story-visual-scan {
+  opacity: 0.42;
+  background: linear-gradient(to bottom, transparent, rgba(104, 238, 145, 0.13), transparent);
+}
+
+.story-visual-core {
+  border-color: rgba(105, 247, 148, 0.56);
+  background:
+    radial-gradient(circle at 37% 28%, rgba(153, 255, 184, 0.08), transparent 20%),
+    radial-gradient(circle at 52% 55%, rgba(46, 190, 90, 0.14), transparent 65%),
+    #020805;
+  box-shadow:
+    inset 0 0 70px rgba(0, 0, 0, 0.74),
+    0 0 0 10px rgba(36, 88, 51, 0.5),
+    0 0 0 16px rgba(1, 7, 3, 0.82),
+    0 0 60px rgba(64, 225, 113, 0.16);
+}
+
+.story-visual-core::before {
+  opacity: 0.46;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 7px,
+    rgba(104, 238, 145, 0.08) 8px,
+    transparent 9px
+  );
+}
+
+.story-orbit-middle {
+  border-color: rgba(104, 238, 145, 0.52);
+  box-shadow:
+    inset 0 0 28px rgba(62, 224, 112, 0.14),
+    0 0 32px rgba(62, 224, 112, 0.15);
+}
+
+.story-orbit-front {
+  filter: drop-shadow(0 0 11px rgba(104, 238, 145, 0.6));
+}
+
+.story-depth-particles i,
+.story-motion-path b {
+  border-color: #031007;
+  background: #71f596;
+  box-shadow:
+    0 0 0 2px rgba(104, 238, 145, 0.14),
+    0 0 15px rgba(104, 238, 145, 0.72);
+}
+
+.visual-podium-screen {
+  background: #020805;
+}
+
+.visual-shadow b {
+  background: radial-gradient(circle at 50% 20%, rgba(92, 232, 134, 0.19), #000 49%);
+}
+
+.story-footer {
+  border-color: rgba(104, 238, 145, 0.18);
+}
+
+.story-footer a {
+  color: var(--story-muted);
+}
+
+.story-footer a:hover {
+  color: var(--story-accent);
+}
+
+@keyframes story-glitch-sweep {
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  89% {
+    opacity: 0.48;
+    transform: translateY(24vh);
+  }
+
+  92% {
+    opacity: 0.18;
+    transform: translateY(58vh);
+  }
+
+  94% {
+    opacity: 0;
+    transform: translateY(84vh);
+  }
+}
+
+@keyframes story-title-glitch {
+  0%,
+  92%,
+  95%,
+  100% {
+    transform: translateX(0);
+    text-shadow:
+      1px 0 rgba(103, 255, 149, 0.14),
+      -1px 0 rgba(30, 132, 65, 0.16),
+      0 0 34px rgba(70, 222, 114, 0.07);
+  }
+
+  93% {
+    transform: translateX(1px);
+    text-shadow:
+      3px 0 rgba(104, 238, 145, 0.24),
+      -2px 0 rgba(12, 74, 34, 0.36);
+  }
+
+  94% {
+    transform: translateX(-1px);
+  }
+}
 @media (max-width: 760px) {
   .story-shell {
     width: calc(100vw - 20px);
@@ -1216,7 +1543,9 @@
 
   .story-scroll-cue span,
   .story-visual *,
-  .story-visual-scan {
+  .story-visual-scan,
+  .story-atmosphere::after,
+  .story-header h1 {
     animation: none !important;
   }
 
